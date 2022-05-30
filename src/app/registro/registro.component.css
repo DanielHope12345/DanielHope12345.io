@@ -1,0 +1,19 @@
+.centerText {
+    text-align: center;
+}
+
+.fullButton {
+    width: 100%;
+}
+
+.mensajeContacto {
+    font-size: 5vmax;
+}
+
+.boldText {
+    font-weight: 600;
+}
+
+.mensajeError{
+    color: red;
+}

@@ -1,0 +1,247 @@
+<div class="container-fluid">
+    <div class="row" [hidden]="interfazPlayers">
+
+        <div class="col-md-5 offset-md-1 pl-5 pt-2">
+
+            <div class="row mb-3">
+                <div class="col-md-12" *ngIf="consultedNetworks">
+                    <label class="mb-3 mt-2">Seleccione uno o mas negocios:</label>
+
+                    <!-- <select class="form-select form-select-lg mb-3" [(ngModel)]="defaultNetwork"
+                        (ngModelChange)="NetworkChange($event)" aria-label=".form-select-lg example">
+                        <option *ngFor="let item of arrayOptions" [ngValue]="item">
+                            {{item.name}}
+                        </option>
+                    </select> -->
+
+                    <ng-multiselect-dropdown [placeholder]="'Seleccione una red'" [settings]="dropDownSettings" [data]="arrayOptions" [(ngModel)]="defaultNetwork" (onSelect)="NetworkChange()" (onDeSelect)="NetworkChange()">
+                    </ng-multiselect-dropdown>
+
+                </div>
+
+            </div>
+
+            <div class="row border-left">
+
+                <label for="" class="mb-3">Seleccione una cobertura</label>
+
+                <div class="col-md-3">
+                    <div class="form-check form-switch pb-3">
+                        <input [(ngModel)]="CoberturaNacional" (ngModelChange)="CoberturaNacionalChange($event)" class="form-check-input" type="checkbox" role="switch" id="switchCoberturaNacional">
+                        <label class="form-check-label" for="switchCoberturaNacional">Nacional</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-check form-switch pb-3">
+                        <input [(ngModel)]="CoberturaCP" (ngModelChange)="CoberturaCPChange($event)" class="form-check-input" type="checkbox" role="switch" id="switchCoberturaCP">
+                        <label class="form-check-label" for="switchCoberturaCP">Codigo P.</label>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-check form-switch pb-3">
+                        <input [(ngModel)]="CoberturaEstado" (ngModelChange)="CoberturaEstadoChange($event)" class="form-check-input" type="checkbox" role="switch" id="switchCoberturaEstado">
+                        <label class="form-check-label" for="switchCoberturaEstado">Estado</label>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-check form-switch pb-3">
+                        <input [(ngModel)]="CoberturaCiudad" (ngModelChange)="CoberturaCiudadChange($event)" class="form-check-input" type="checkbox" role="switch" id="switchCoberturaCiudad">
+                        <label class="form-check-label" for="switchCoberturaCiudad">Ciudad</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Formulario filtrado por Codigo Postal -->
+                <div class="col-md-4" *ngIf="CoberturaCP">
+                    <input type="number" maxlength="5" min="0" max="99999" [(ngModel)]="FiltroCP" class="form-control mb-3" placeholder="Introduzca un CP valido">
+                </div>
+
+                <div class="col-md-4" *ngIf="CoberturaCP">
+                    <button class="btn btn-secondary w-100" (click)="FiltrarCP()">Filtrar</button>
+                </div>
+
+
+                <!-- Formulario filtrado por Estado -->
+                <div class="col-md-4" *ngIf="CoberturaEstado">
+                    <select class="form-select form-select-lg mb-3" [(ngModel)]="defaultEstado" (ngModelChange)="EstadoChange($event)">
+                        <option *ngFor="let item of arrayEstados" [ngValue]="item">
+                            {{item}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-4" *ngIf="CoberturaEstado">
+                    <button class="btn btn-secondary w-100" (click)="FiltrarEstado()">Filtrar</button>
+                </div>
+
+                <!-- Formulario filtrado por Codigo Postal -->
+                <div class="col-md-4" *ngIf="CoberturaCiudad">
+                    <input type="text" maxlength="100" [(ngModel)]="defaultCiudad" class="form-control mb-3" placeholder="Introduzca una ciudad valida">
+                </div>
+
+                <div class="col-md-4" *ngIf="CoberturaCiudad">
+                    <button class="btn btn-secondary w-100" (click)="FiltrarCiudad()">Filtrar</button>
+                </div>
+            </div>
+
+
+            <div [hidden]="!banderaSucursales">
+                <table datatable [dtOptions]="dtOptions[0]" [dtTrigger]="dtTrigger0" id="tablaSucursales" class="table table-responsive stripe hover">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="text-align: center">
+                                <input [(ngModel)]="selectAllRows" (ngModelChange)="selectAllChange($event)" type="checkbox">
+                            </th>
+                            <th scope="col">Sucursal</th>
+                            <th scope="col">Disponibilidad</th>
+                            <th scope="col">Numero de red</th>
+                            <th scope="col">Numero de sucursal</th>
+                            <th scope="col">Segundos</th>
+                            <th scope="col">Pantallas</th>
+                            <th scope="col">Dias</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of arraySucursales">
+                            <td scope="row"></td>
+                            <td>{{item.Nombre_Sucursal}}</td>
+                            <td style="white-space: pre;">
+
+                                <!-- <mat-form-field appearance="fill" class="w-100">
+                                <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMaxRows="3" disabled>{{item.Inventario}}</textarea>
+                            </mat-form-field> -->
+
+                                {{item.Inventario}}
+                            </td>
+                            <td>#{{item.Id_Negocio}}</td>
+                            <td>{{item.Id_Sucursal}}</td>
+                            <td>{{item.Segundos}}</td>
+                            <td>{{item.Pantallas}}</td>
+                            <td>{{item.DiasDisponibles}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <button class="btn btn-primary m-3" routerLink="">Volver</button>
+
+            <button class="btn btn-success " [hidden]="contadorDisponibilidadPlayers == 0" (click)="getSeleccionadas()">
+                Siguiente</button>
+
+
+
+        </div>
+        <div class="col-md-6 pt-3">
+
+            <div class="container-fluid">
+
+                <div class="row">
+
+                    <div class="col-md-12">
+
+                        <div>
+
+                            <div class="row">
+                                <div class="col-md-10 mt-4">
+                                    <!-- <input class="w-100" type="date" id="meeting-time" name="meeting-time" value="2022-01-12T19:30"
+                                        min="2022-01-17T00:00" max="2022-12-30T00:00"> -->
+
+                                    <mat-form-field appearance="fill" class="w-100">
+                                        <mat-label>Ingrese un rango de fechas</mat-label>
+                                        <mat-date-range-input [rangePicker]="picker">
+                                            <input matStartDate placeholder="Fecha inicio" disabled>
+                                            <input matEndDate placeholder="Fecha fin" disabled>
+                                        </mat-date-range-input>
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-date-range-picker disabled="false" #picker>
+                                            <mat-date-range-picker-actions>
+                                                <button mat-button matDateRangePickerCancel>Cancelar</button>
+                                                <button mat-raised-button color="primary" matDateRangePickerApply (click)="dataRangeChange(picker)">Aceptar</button>
+                                            </mat-date-range-picker-actions>
+                                        </mat-date-range-picker>
+                                    </mat-form-field>
+
+                                </div>
+                                <div class="col-md-12"></div>
+                                <div class="col-md-4 mb-3">
+                                    <button class="btn btn-primary w-100 mt-2" (click)="getInventario()">Aceptar</button>
+                                    <label class="text-danger" *ngIf="fechasVacias">Debe de seleccionar un rango de
+                                        fechas</label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <google-map id="sucursalesMap" width="85%" height="250%" [center]="center" [zoom]="zoom">
+                            <map-marker #markerM="mapMarker" *ngFor="let marker of arraySucursales; let i= index" [position]="marker.position" [icon]="marker.Logo" [options]="markerOptions" (mapClick)="openInfoWindow(markerM, i)">
+                                <map-info-window>{{marker.Nombre_Sucursal}}</map-info-window>
+                            </map-marker>
+                        </google-map>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row mt-5" [hidden]="!interfazPlayers">
+
+        <h2 class="text-center">Sucursales a pautar</h2>
+
+        <div class="col-md-10 offset-md-1 ">
+
+            <hr>
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <h4 style="text-align: end">${{CotizacionMostrar}} MXN</h4>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary w-100" (click)="cotizarFromSelectedPlayers()">Cotizar</button>
+                </div>
+
+                <div class="col-md-12 mt-3">
+                    <table datatable [dtOptions]="dtOptions[1]" [dtTrigger]="dtTrigger1" id="tablaPlayers" class="table table-responsive stripe hover" style="text-align: center">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="text-align: center">
+                                    <input [(ngModel)]="selectAllRows1" (ngModelChange)="selectAllChange1($event)" type="checkbox">
+                                </th>
+                                <th scope="col">Nombre sucursal</th>
+                                <th scope="col">Pantallas (Num)</th>
+                                <th scope="col">Disponibilidad</th>
+                                <th scope="col">Fechas</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of arrayPlayers">
+                                <td scope="row"></td>
+                                <td>{{item.Nombre_Sucursal}}</td>
+                                <td>{{item.Pantallas}}</td>
+                                <td>
+                                    <!-- {{item.Segundos}} -->
+                                    OK
+                                </td>
+                                <td>{{item.Fecha}}</td>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-10 offset-md-1 mt-3">
+            <button class="btn btn-secondary me-3" (click)="backFromPlayers()">Volver</button>
+            <button class="btn btn-success">Continuar</button>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,124 @@
+<div class="container-fluid">
+
+    <div class="row mx-auto" style="margin-top: 10vh;">
+
+        <div class="col-md-4 offset-md-4 col-sm-12 centerText" *ngIf="Pyme == 0">
+
+            <h1>Registrate</h1>
+
+            <div class="form-group pb-3 pt-3">
+                <label for="giroNegocio">Cual es el giro de tu negocio?</label>
+                <input type="text" class="form-control" id="giroNegocio" [(ngModel)]="Giro" placeholder="" (ngModelChange)="GiroCambio()">
+                <small class="form-text text-danger" *ngIf="!GiroIngresado && formularioEnviado" >Por favor ingrese el giro de su negocio.</small>
+            </div>
+
+            <div class="form-group pb-3">
+                <label for="inputEmpleadosNum">Cuantos empleados tienes?</label>
+                <select id="inputEmpleadosNum" type="number" [(ngModel)]="employOption" class="form-select" aria-label="Default select example">
+                    <option *ngFor="let item of OpcionesNumEmpleados" [ngValue]="item">{{ item.text }}</option>
+                </select>
+                <!-- <small class="form-text text-muted">Por favor denos esta informacion.</small> -->
+            </div>
+
+            <div class="form-group pb-3">
+                <label for="giroNegocio">Es negocio</label>
+                <select class="form-select" [(ngModel)]="negocioOption" aria-label="Default select example">
+                    <option *ngFor="let item of OpcionesNegocio" [ngValue]="item">{{item.text}}</option>
+                </select>
+                <!-- <small class="form-text text-muted">Por favor denos esta informacion.</small> -->
+            </div>
+
+
+            <div class="form-group pb-3">
+                <label for="giroNegocio">El promedio de ingreso es</label>
+                <select class="form-select" aria-label="Default select example" [(ngModel)]="ingresoOption">
+                    <option *ngFor="let item of OpcionesIngresos" [ngValue]="item">{{item.text}}</option>
+                </select>
+                <!-- <small class="form-text text-muted">Por favor denos esta informacion.</small> -->
+            </div>
+
+
+            <div class="row mt-3">
+                <div class="col-md-4 col-sm-6 offset-md-2 p-2">
+                    <button type="button" (click)="enviarCuestionario()" class=" btn btn-primary fullButton">Aceptar</button>
+                </div>
+                <div class="col-md-4 col-sm-6 p-2">
+                    <button type="button" routerLink="" class=" btn btn-secondary fullButton">Cancelar</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+
+            </div>
+
+        </div>
+
+
+
+
+        <div *ngIf="Pyme == 1">
+            <div class="col-md-8 offset-md-2 centerText" style="margin-top: 15vh;">
+                <h1 class="mensajeContacto">Un ejecutivo te contactara</h1>
+                <h4>Promoespacio</h4>
+            </div>
+
+            <div class="col-md-4 offset-md-4 mt-5">
+                <button type="button" (click)="Pyme = 2" class=" btn btn-primary fullButton">Continuar</button>
+            </div>
+        </div>
+
+        <div class="col-md-6 offset-md-3 order-md-1 centerText" *ngIf="Pyme == 2">
+            <h1 class="mensajeContacto " style="font-size: 3vmax; ">DATOS DE CONTACTO</h1>
+
+        </div>
+
+        <div class="col-md-4 offset-md-4 col-sm-12 order-1 centerText" *ngIf="Pyme == 2">
+
+            <form (ngSubmit)="guardarDatosContacto(datosContactoForm)" #datosContactoForm ="ngForm" autocomplete="off">
+
+                <div class="form-group  pb-3 pt-3">
+                    <label for="giroNegocio">NOMBRE</label>
+                    <input  type="text" class="form-control border-0" ngModel name="nombreContacto" id="nombreContacto" placeholder="Ingresa tu Nombre" required>
+                    <!-- <small class="form-text text-muted">Por favor denos esta informacion.</small> -->
+                </div>
+
+                <div class="form-group  pb-3 pt-3">
+                    <label for="giroNegocio">GIRO DE NEGOCIO</label>
+                    <input type="text" class="form-control border-0" ngModel name="giroContacto"  id="giroContacto" placeholder="Ingresa tu Giro de Negocio" required>
+                    <!-- <small class="form-text text-muted">Por favor denos esta informacion.</small> -->
+                </div>
+    
+                <div class="form-group  pb-3 pt-3">
+                    <label for="giroNegocio">DIRECCIÓN</label>
+                    <input type="text" class="form-control border-0" ngModel name="direccionContacto" id="direccionContacto" placeholder="Ingresa tu dirección" required>
+                    <!-- <small class="form-text text-muted">Por favor denos esta informacion.</small> -->
+                </div>
+    
+                <div class="form-group  pb-3 pt-3">
+                    <label for="giroNegocio">TELÉFONO</label>
+                    <input type="text" class="form-control border-0" ngModel name="telefonoContacto" id="telefonoContacto" placeholder="Ingresa tu número celular" required>
+                    <!-- <small class="form-text text-muted">Por favor denos esta informacion.</small> -->
+                </div>
+    
+                <div class="form-group  pb-3 pt-3">
+                    <label for="giroNegocio">CORREO ELECTRÓNICO</label>
+                    <input type="email" email class="form-control border-0" ngModel name="emailContacto" id="emailContacto" placeholder="Ingresa tu Correo Electrónico" required>
+                    <!-- <small class="form-text text-muted">Por favor denos esta informacion.</small> -->
+                </div>
+    
+                <div class="row mt-3" *ngIf="Pyme == 2">
+                    <div class="col-md-4 offset-md-2 col-sm-6 p-2">
+                        <button type="submit" class=" btn btn-primary fullButton">Aceptar</button>
+                    </div>
+                    <div class="col-md-4 col-sm-6 p-2">
+                        <button type="button" routerLink="" class=" btn btn-secondary fullButton">Cancelar</button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

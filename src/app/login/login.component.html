@@ -1,0 +1,45 @@
+<div class="container-fluid">
+
+    <div class="row mx-auto" style="margin-top: 10vh;">
+
+        <div class="col-md-4 offset-md-4 col-sm-12 ">
+
+
+            <h1 class="centerText">Ingresa</h1>
+
+
+            <form (ngSubmit)="Login(formLogin)" #formLogin ="ngForm" autocomplete="off">
+
+                <div class="form-group pb-3 pt-3">
+                    <label for="giroNegocio">Usuario</label>
+                    <input type="text" class="form-control" name="usuarioLogin" ngModel id="usuario" placeholder="" required="">
+                    <!-- <small class="form-text text-muted">Por favor denos esta informacion.</small> -->
+                </div>
+    
+    
+                <div class="form-group pb-3 pt-3">
+                    <label for="giroNegocio">Contraseña</label>
+                    <input type="text" class="form-control" name="passwordLogin" ngModel id="password" placeholder="" required="">
+                    <!-- <small class="form-text text-muted">Por favor ingrese su contraseña tal cual la redacto.</small> -->
+                </div>
+    
+    
+                <div class="row mt-3">
+                    <div class="col-md-4 col-sm-6 offset-md-2 p-2">
+                        <!-- <button type="button" routerLink="network" class=" btn btn-primary fullButton">Aceptar</button> -->
+                        <button type="submit" class=" btn btn-primary fullButton">Aceptar</button>
+                    </div>
+                    <div class="col-md-4 col-sm-6 p-2">
+                        <button type="button" routerLink="" class=" btn btn-secondary fullButton">Cancelar</button>
+                    </div>
+                </div>
+
+            </form> 
+
+
+        </div>
+
+
+    </div>
+
+</div>
